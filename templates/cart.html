@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart - GearX</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #E8DFD2;
+            color: #3C3C3C;
+        }
+
+        .header {
+            background: #BC6C4D;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .cart-item {
+            background: #F9F7F2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .remove {
+            background: #767D52;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .total {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🛒 Your Cart</h1>
+</div>
+
+<div class="container">
+
+    {% if products %}
+
+        {% for p in products %}
+        <div class="cart-item">
+
+            <!-- IMAGE -->
+            <img src="{{ url_for('static', filename='images/' + p[3]) }}">
+
+            <div class="info">
+                <h3>{{ p[1] }}</h3>
+                <p>₹{{ p[2] }}</p>
+            </div>
+
+            <a class="remove" href="/remove/{{ p[0] }}">Remove</a>
+
+        </div>
+        {% endfor %}
+
+        <div class="total">
+            Total: ₹{{ total }}
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+            🛒 Cart is empty
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+

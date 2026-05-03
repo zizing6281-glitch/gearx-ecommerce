@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GearX Store</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #E8DFD2;
+            color: #3C3C3C;
+        }
+
+        /* HEADER */
+        .header {
+            background: #BC6C4D;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-family: monospace;
+            font-size: 32px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #F9F7F2;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .navbar a {
+            margin: 12px;
+            text-decoration: none;
+            color: #3C3C3C;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            color: #BC6C4D;
+        }
+
+        /* PRODUCTS */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product {
+            background: #F9F7F2;
+            width: 220px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        button {
+            background: #BC6C4D;
+            color: white;
+            border: none;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-btn {
+            background: #767D52;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">⚙️ GearX</div>
+    <p>Smart Accessories Store</p>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/deals">Deals</a>
+    <a href="/cart">Cart 🛒</a>
+    <a href="/login">Login</a>
+</div>
+
+<!-- PRODUCTS -->
+<div class="container">
+
+    {% for product in products %}
+
+    <div class="product">
+
+        <!-- IMAGE FIXED -->
+        <img src="{{ url_for('static', filename='images/' + product[3]) }}">
+
+        <h3>{{ product[1] }}</h3>
+        <p>₹{{ product[2] }}</p>
+
+        <!-- CART -->
+        <a href="/add_to_cart/{{ product[0] }}">
+            <button class="cart-btn">Add to Cart</button>
+        </a>
+
+        <!-- BUY -->
+        <a href="/buy/{{ product[0] }}">
+            <button>Buy Now</button>
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
+
+

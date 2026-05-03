@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - GearX</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #E8DFD2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #3C3C3C;
+        }
+
+        .box {
+            background: #F9F7F2;
+            padding: 30px;
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            font-family: monospace;
+            color: #BC6C4D;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        button {
+            background: #BC6C4D;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 95%;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #a85c42;
+        }
+
+        .note {
+            font-size: 12px;
+            margin-top: 10px;
+            color: #767D52;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="title">⚙️ GearX Login</div>
+
+    <form action="/send_otp" method="post">
+        <input type="text" name="phone" placeholder="Enter Mobile Number">
+
+        <button type="submit">Send OTP</button>
+    </form>
+
+    <div class="note">
+        We will send OTP to your mobile number
+    </div>
+
+</div>
+
+</body>
+</html>
+

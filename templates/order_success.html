@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Placed</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #E8DFD2;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .box {
+            background: #F9F7F2;
+            padding: 30px;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #BC6C4D;
+        }
+
+        .btn {
+            background: #767D52;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🎉 Order Placed Successfully!</h1>
+
+    <h3>{{ product[0] }}</h3>
+    <p>₹{{ product[1] }}</p>
+
+    <!-- image (optional safe check) -->
+    {% if product[2] %}
+        <img src="{{ url_for('static', filename='images/' + product[2]) }}">
+    {% endif %}
+
+    <br><br>
+
+    <a class="btn" href="/">Continue Shopping</a>
+
+</div>
+
+</body>
+</html>
+

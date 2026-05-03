@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result - GearX</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #E8DFD2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: #F9F7F2;
+            padding: 30px;
+            width: 350px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            font-family: monospace;
+        }
+
+        .success {
+            color: #2e7d32;
+        }
+
+        .error {
+            color: #c62828;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #BC6C4D;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background: #a85c42;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    {% if status == "success" %}
+        <h2 class="success">{{ message }}</h2>
+        <p>🎉 Welcome to GearX Store</p>
+    {% else %}
+        <h2 class="error">{{ message }}</h2>
+        <p>❌ Please try again</p>
+    {% endif %}
+
+    <a href="/">Go to Home</a>
+
+</div>
+
+</body>
+</html>
+
