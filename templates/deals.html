@@ -14,89 +14,31 @@
 
 <div class="container">
 
-    <!-- iPhone -->
+    {% for p in products %}
+
     <div class="card">
-        <span class="tag">HOT</span>
 
-        <h3>iPhone</h3>
+        <span class="tag">HOT DEAL</span>
 
-        <p class="price">₹79,999 → ₹71,999</p>
+        <h3>{{ p[1] }}</h3>
+
+        <p class="price">₹{{ p[2] }}</p>
 
         <div class="buttons">
 
-            <a href="/add_to_cart/1" class="cart-btn">Add To Cart</a>
-            <a href="/buy/1" class="buy-btn">Buy Now</a>
+            <a href="/add_to_cart/{{ p[0] }}" class="cart-btn">
+                Add To Cart
+            </a>
+
+            <a href="/buy/{{ p[0] }}" class="buy-btn">
+                Buy Now
+            </a>
 
         </div>
+
     </div>
 
-
-    <!-- Samsung -->
-    <div class="card">
-        <span class="tag">SALE</span>
-
-        <h3>Samsung</h3>
-
-        <p class="price">₹69,999 → ₹59,999</p>
-
-        <div class="buttons">
-
-            <a href="/add_to_cart/2" class="cart-btn">Add To Cart</a>
-            <a href="/buy/2" class="buy-btn">Buy Now</a>
-
-        </div>
-    </div>
-
-
-    <!-- Laptop -->
-    <div class="card">
-        <span class="tag">DEAL</span>
-
-        <h3>Laptop</h3>
-
-        <p class="price">₹55,000 → ₹49,999</p>
-
-        <div class="buttons">
-
-            <a href="/add_to_cart/3" class="cart-btn">Add To Cart</a>
-            <a href="/buy/3" class="buy-btn">Buy Now</a>
-
-        </div>
-    </div>
-
-
-    <!-- Smart Watch -->
-    <div class="card">
-        <span class="tag">HOT</span>
-
-        <h3>Smart Watch</h3>
-
-        <p class="price">₹2,999 → ₹1,999</p>
-
-        <div class="buttons">
-
-            <a href="/add_to_cart/4" class="cart-btn">Add To Cart</a>
-            <a href="/buy/4" class="buy-btn">Buy Now</a>
-
-        </div>
-    </div>
-
-
-    <!-- Earbuds -->
-    <div class="card">
-        <span class="tag">SALE</span>
-
-        <h3>Earbuds</h3>
-
-        <p class="price">₹1,999 → ₹1,299</p>
-
-        <div class="buttons">
-
-            <a href="/add_to_cart/5" class="cart-btn">Add To Cart</a>
-            <a href="/buy/5" class="buy-btn">Buy Now</a>
-
-        </div>
-    </div>
+    {% endfor %}
 
 </div>
 
