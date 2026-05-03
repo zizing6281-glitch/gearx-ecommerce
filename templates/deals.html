@@ -45,7 +45,35 @@
         .price {
             color: #BC6C4D;
             font-weight: bold;
+            margin-top: 10px;
         }
+
+        .buttons{
+            display:flex;
+            gap:10px;
+            margin-top:15px;
+        }
+
+        .cart-btn{
+            flex:1;
+            padding:10px;
+            border:none;
+            background:black;
+            color:white;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        .buy-btn{
+            flex:1;
+            padding:10px;
+            border:none;
+            background:#BC6C4D;
+            color:white;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
     </style>
 </head>
 
@@ -61,18 +89,36 @@
         <span class="tag">HOT</span>
         <h3>iPhone</h3>
         <p class="price">₹79,999 → ₹71,999</p>
+
+        <div class="buttons">
+            <button class="cart-btn">Add To Cart</button>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+
     </div>
 
     <div class="card">
         <span class="tag">SALE</span>
         <h3>Samsung</h3>
         <p class="price">₹69,999 → ₹59,999</p>
+
+        <div class="buttons">
+            <button class="cart-btn">Add To Cart</button>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+
     </div>
 
     <div class="card">
         <span class="tag">COMBO</span>
         <h3>Watch + Earbuds</h3>
         <p class="price">₹4,999 → ₹3,999</p>
+
+        <div class="buttons">
+            <button class="cart-btn">Add To Cart</button>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+
     </div>
 
 </div>
