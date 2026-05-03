@@ -3,78 +3,7 @@
 <head>
     <title>Deals - GearX</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #E8DFD2;
-        }
-
-        .header {
-            background: #BC6C4D;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-            gap: 20px;
-        }
-
-        .card {
-            background: #F9F7F2;
-            width: 250px;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .tag {
-            background: #767D52;
-            color: white;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-
-        .price {
-            color: #BC6C4D;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .buttons{
-            display:flex;
-            gap:10px;
-            margin-top:15px;
-        }
-
-        .cart-btn{
-            flex:1;
-            padding:10px;
-            border:none;
-            background:black;
-            color:white;
-            border-radius:6px;
-            cursor:pointer;
-        }
-
-        .buy-btn{
-            flex:1;
-            padding:10px;
-            border:none;
-            background:#BC6C4D;
-            color:white;
-            border-radius:6px;
-            cursor:pointer;
-        }
-
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -85,40 +14,81 @@
 
 <div class="container">
 
+    <!-- iPhone -->
     <div class="card">
         <span class="tag">HOT</span>
+
         <h3>iPhone</h3>
+
         <p class="price">₹79,999 → ₹71,999</p>
 
         <div class="buttons">
-            <button class="cart-btn">Add To Cart</button>
-            <button class="buy-btn">Buy Now</button>
-        </div>
 
+            <a href="/add_to_cart/1">
+                <button class="cart-btn">
+                    Add To Cart
+                </button>
+            </a>
+
+            <a href="/buy/1">
+                <button class="buy-btn">
+                    Buy Now
+                </button>
+            </a>
+
+        </div>
     </div>
 
+
+    <!-- Samsung -->
     <div class="card">
         <span class="tag">SALE</span>
+
         <h3>Samsung</h3>
+
         <p class="price">₹69,999 → ₹59,999</p>
 
         <div class="buttons">
-            <button class="cart-btn">Add To Cart</button>
-            <button class="buy-btn">Buy Now</button>
-        </div>
 
+            <a href="/add_to_cart/2">
+                <button class="cart-btn">
+                    Add To Cart
+                </button>
+            </a>
+
+            <a href="/buy/2">
+                <button class="buy-btn">
+                    Buy Now
+                </button>
+            </a>
+
+        </div>
     </div>
 
+
+    <!-- Watch -->
     <div class="card">
         <span class="tag">COMBO</span>
-        <h3>Watch + Earbuds</h3>
+
+        <h3>Smart Watch</h3>
+
         <p class="price">₹4,999 → ₹3,999</p>
 
         <div class="buttons">
-            <button class="cart-btn">Add To Cart</button>
-            <button class="buy-btn">Buy Now</button>
-        </div>
 
+            <a href="/add_to_cart/4">
+                <button class="cart-btn">
+                    Add To Cart
+                </button>
+            </a>
+
+            <a href="/buy/4">
+                <button class="buy-btn">
+                    Buy Now
+                </button>
+            </a>
+
+        </div>
     </div>
 
 </div>
