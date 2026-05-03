@@ -178,20 +178,22 @@ body {
 .cart-btn{
     flex:1;
     padding:10px;
-    border:none;
     background:black;
     color:white;
     border-radius:6px;
     cursor:pointer;
+    text-decoration:none;
+    text-align:center;
 }
 
 .buy-btn{
     flex:1;
     padding:10px;
-    border:none;
     background:#BC6C4D;
     color:white;
     border-radius:6px;
     cursor:pointer;
+    text-decoration:none;
+    text-align:center;
 }
 
