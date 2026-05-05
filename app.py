@@ -1,190 +1,111 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 import random
-import os
 
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-
-# ---------------- DATABASE INIT ----------------
-def init_db():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        price INTEGER,
-        image TEXT
-    )
-    """)
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS orders (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        product_name TEXT,
-        price INTEGER
-    )
-    """)
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        phone TEXT,
-        otp TEXT
-    )
-    """)
-
-    cursor.execute("SELECT COUNT(*) FROM products")
-    if cursor.fetchone()[0] == 0:
-        products = [
-            ('iPhone', 79999, 'iphone.jpg'),
-            ('Samsung', 69999, 'samsung.jpg'),
-            ('Laptop', 55000, 'laptop.jpg'),
-            ('Smart Watch', 2999, 'watch.jpg'),
-            ('Earbuds', 1999, 'earbuds.jpg')
-        ]
-
-        cursor.executemany(
-            "INSERT INTO products (name, price, image) VALUES (?, ?, ?)",
-            products
-        )
-
-    conn.commit()
-    conn.close()
-
-
-# ---------------- HOME ----------------
+# 🟢 Home Page
 @app.route('/')
-def home():
-    conn = sqlite3.connect('database.db')
+def index():
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
 
     conn.close()
-
     return render_template("index.html", products=products)
 
 
-# ---------------- DEALS ----------------
-@app.route('/deals')
-def deals():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()
-
-    conn.close()
-
-    return render_template("deals.html", products=products)
-
-
-# ---------------- CART ----------------
+# 🟢 Add to Cart
 @app.route('/add_to_cart/<int:id>')
 def add_to_cart(id):
-    if 'cart' not in session:
-        session['cart'] = []
+    if "cart" not in session:
+        session["cart"] = []
 
-    session['cart'].append(id)
-    session.modified = True
-    return redirect('/')
-
-
-@app.route('/cart')
-def cart():
-    cart_items = session.get('cart', [])
-
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    products = []
-    total = 0
-
-    for pid in cart_items:
-        cursor.execute("SELECT * FROM products WHERE id=?", (pid,))
-        item = cursor.fetchone()
-        if item:
-            products.append(item)
-            total += item[2]
-
-    conn.close()
-
-    return render_template("cart.html", products=products, total=total)
-
-
-@app.route('/remove/<int:id>')
-def remove(id):
-    cart = session.get('cart', [])
-
-    if id in cart:
-        cart.remove(id)
-
-    session['cart'] = cart
+    session["cart"].append(id)
     return redirect('/cart')
 
 
-# ---------------- BUY ----------------
-@app.route('/buy/<int:id>')
-def buy(id):
-    conn = sqlite3.connect('database.db')
+# 🟢 Cart Page
+@app.route('/cart')
+def cart():
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT name, price FROM products WHERE id=?", (id,))
-    product = cursor.fetchone()
-
-    if product:
-        cursor.execute(
-            "INSERT INTO orders (product_name, price) VALUES (?, ?)",
-            (product[0], product[1])
-        )
-        conn.commit()
+    cart_items = []
+    if "cart" in session:
+        for pid in session["cart"]:
+            cursor.execute("SELECT * FROM products WHERE id=?", (pid,))
+            cart_items.append(cursor.fetchone())
 
     conn.close()
+    return render_template("cart.html", cart_items=cart_items)
 
-    return render_template("order_success.html", product=product)
 
-
-# ---------------- LOGIN ----------------
-@app.route('/login')
+# 🟢 Login Page
+@app.route('/login', methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        number = request.form["number"]
+        otp = str(random.randint(1000, 9999))
+
+        session["otp"] = otp
+        session["number"] = number
+
+        print("OTP:", otp)  # terminal me dikhega
+
+        return redirect("/verify")
+
     return render_template("login.html")
 
 
-@app.route('/send_otp', methods=['POST'])
-def send_otp():
-    phone = request.form['phone']
-    otp = str(random.randint(1000, 9999))
-
-    session['otp'] = otp
-
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    cursor.execute("INSERT INTO users (phone, otp) VALUES (?, ?)", (phone, otp))
-
-    conn.commit()
-    conn.close()
-
-    return render_template("verify.html", otp=otp)
-
-
-@app.route('/verify', methods=['POST'])
+# 🟢 Verify OTP
+@app.route('/verify', methods=["GET", "POST"])
 def verify():
-    if request.form['otp'] == session.get('otp'):
-        return render_template("result.html", message="Login Successful ✅", status="success")
-    else:
-        return render_template("result.html", message="Wrong OTP ❌", status="error")
+    if request.method == "POST":
+        user_otp = request.form["otp"]
+
+        if user_otp == session.get("otp"):
+            conn = sqlite3.connect("database.db")
+            cursor = conn.cursor()
+
+            cursor.execute(
+                "INSERT INTO users (number, otp) VALUES (?, ?)",
+                (session.get("number"), session.get("otp"))
+            )
+
+            conn.commit()
+            conn.close()
+
+            return render_template("result.html", msg="Login Successful")
+
+        else:
+            return render_template("result.html", msg="Invalid OTP")
+
+    return render_template("verify.html")
 
 
-# ---------------- RUN (RENDER FIX) ----------------
+# 🟢 Deals Page
+@app.route('/deals')
+def deals():
+    return render_template("deals.html")
+
+
+# 💳 🟢 Payment Page (NEW)
+@app.route('/payment/<int:id>')
+def payment(id):
+    return render_template("payment.html", id=id)
+
+
+# 🎉 🟢 Payment Success (Order confirm)
+@app.route('/payment_success/<int:id>')
+def payment_success(id):
+    return render_template("order_success.html")
+
+
+# ▶️ Run App
 if __name__ == "__main__":
-    init_db()
-
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(debug=True)
     
